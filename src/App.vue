@@ -5,7 +5,12 @@
                 <h1 v-myon:click="letsGo">Directives Exercise</h1>
                 <!-- Exercise -->
                 <!-- Build a Custom Directive which works like v-on (Listen for Events) -->
-
+                <button v-customOn:click="clicked" class="btn btn-primary">DUDE Button</button>
+                <hr>
+                <div class="block"
+                    v-customOn:mouseenter="mouseEnter"
+                    v-customOn:mouseleave="mouseLeave">
+                </div>
             </div>
         </div>
     </div>
@@ -19,6 +24,16 @@
                     var content = el.innerText;
                     el.addEventListener(binding.arg, function() {binding.value(content)});
                 }
+            },
+            customOn: {
+                bind(el, binding) {
+                    // el.onclick = function() {
+                    //     binding.value();
+                    // }
+                    const type = binding.arg;
+                    const fn = binding.value;
+                    el.addEventListener(type, fn);
+                }
             }
         },
         methods: {
@@ -28,10 +43,24 @@
                     OGmessage = NEwmessage;
                 }
                 alert(OGmessage);
+            },
+            clicked() {
+                alert('I was clicked');
+            },
+            mouseEnter() {
+                console.log("You entered my dude");
+            },
+            mouseLeave() {
+                console.log("Don't leave me bro");
             }
         }
     }
 </script>
 
 <style>
+    .block {
+        width: 100px; 
+        height: 100px;
+        background-color: lightgreen;
+    }
 </style>
